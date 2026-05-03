@@ -16,7 +16,7 @@ export default function Sidebar({ activePage, setActivePage }) {
   ];
 
   return (
-    <aside className="w-64 shrink-0 border-r border-white/10 bg-[#020617] p-5">
+    <div className="h-full w-72 border-r border-white/10 bg-[#020617] p-5 shadow-2xl">
       <h1 className="mb-10 text-2xl font-black">🥪 Admin</h1>
 
       <nav className="space-y-3">
@@ -40,6 +40,6 @@ export default function Sidebar({ activePage, setActivePage }) {
           );
         })}
       </nav>
-    </aside>
+    </div>
   );
 }
