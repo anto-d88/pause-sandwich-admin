@@ -4,6 +4,7 @@ import OrdersPage from "./pages/OrdersPage";
 import StockPage from "./pages/StockPage";
 import MessagesPage from "./pages/MessagesPage";
 import KitchenPage from "./pages/KitchenPage";
+import CustomersPage from "./pages/CustomersPage";
 
 function App() {
   const [activePage, setActivePage] = useState("dashboard");
@@ -18,6 +19,10 @@ function App() {
         <OrdersPage activePage={activePage} setActivePage={setActivePage} />
       )}
 
+      {activePage === "kitchen" && (
+        <KitchenPage activePage={activePage} setActivePage={setActivePage} />
+      )}
+
       {activePage === "stock" && (
         <StockPage activePage={activePage} setActivePage={setActivePage} />
       )}
@@ -26,8 +31,8 @@ function App() {
         <MessagesPage activePage={activePage} setActivePage={setActivePage} />
       )}
 
-      {activePage === "kitchen" && (
-        <KitchenPage activePage={activePage} setActivePage={setActivePage} />
+      {activePage === "customers" && (
+        <CustomersPage activePage={activePage} setActivePage={setActivePage} />
       )}
     </div>
   );

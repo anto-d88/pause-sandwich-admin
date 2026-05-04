@@ -4,6 +4,7 @@ import {
   Package,
   MessageSquare,
   ChefHat,
+  Users,
 } from "lucide-react";
 
 export default function Sidebar({ activePage, setActivePage }) {
@@ -13,6 +14,7 @@ export default function Sidebar({ activePage, setActivePage }) {
     { id: "kitchen", label: "Cuisine", icon: ChefHat },
     { id: "stock", label: "Stock", icon: Package },
     { id: "messages", label: "Messages", icon: MessageSquare },
+    { id: "customers", label: "Clients", icon: Users },
   ];
 
   return (
