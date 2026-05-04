@@ -5,12 +5,15 @@ import StockPage from "./pages/StockPage";
 import MessagesPage from "./pages/MessagesPage";
 import KitchenPage from "./pages/KitchenPage";
 import CustomersPage from "./pages/CustomersPage";
+import AdminNotifications from "./components/AdminNotifications";
 
 function App() {
   const [activePage, setActivePage] = useState("dashboard");
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white">
+      <AdminNotifications />
+
       {activePage === "dashboard" && (
         <Dashboard activePage={activePage} setActivePage={setActivePage} />
       )}
