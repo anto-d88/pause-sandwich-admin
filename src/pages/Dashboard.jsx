@@ -96,7 +96,7 @@ function handleNewOrder(order) {
       ...current,
       visible: false,
     }));
-  }, 10000);
+  }, 60000);
 }
 
   useEffect(() => {
