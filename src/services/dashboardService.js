@@ -103,12 +103,104 @@ const getOrderSlot = (order) => {
     order.delivery_slot || order.slot || order.delivery_time || ""
   ).toLowerCase();
 
+  if (rawSlot.includes("08")) return "08h";
+  if (rawSlot.includes("09")) return "09h";
+  if (rawSlot.includes("10")) return "10h";
   if (rawSlot.includes("11")) return "11h";
+  if (rawSlot.includes("12:30")) return "12h30";
   if (rawSlot.includes("13")) return "13h";
   if (rawSlot.includes("15")) return "15h";
 
   return "autre";
 };
+
+export async function getSettingsMap() {
+  const { data, error } = await supabase.from("settings").select("*");
+
+  if (error) throw error;
+
+  const settings = {};
+
+  (data || []).forEach((setting) => {
+    settings[setting.key] = setting.value;
+  });
+
+  return settings;
+}
+
+export async function toggleSetting(key) {
+  const { data: setting, error: selectError } = await supabase
+    .from("settings")
+    .select("*")
+    .eq("key", key)
+    .single();
+
+  if (selectError) throw selectError;
+
+  const nextValue = setting.value === "true" ? "false" : "true";
+
+  const { data, error } = await supabase
+    .from("settings")
+    .update({
+      value: nextValue,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("key", key)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function getDeliverySlots() {
+  const { data, error } = await supabase
+    .from("delivery_slots")
+    .select("*")
+    .order("display_order", { ascending: true })
+    .order("slot_time", { ascending: true });
+
+  if (error) throw error;
+
+  return data || [];
+}
+
+export async function toggleDeliverySlot(slotId) {
+  const { data: slot, error: selectError } = await supabase
+    .from("delivery_slots")
+    .select("*")
+    .eq("id", slotId)
+    .single();
+
+  if (selectError) throw selectError;
+
+  const { data, error } = await supabase
+    .from("delivery_slots")
+    .update({
+      active: !slot.active,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", slotId)
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
+export async function getControlData() {
+  const [settings, deliverySlots] = await Promise.all([
+    getSettingsMap(),
+    getDeliverySlots(),
+  ]);
+
+  return {
+    settings,
+    deliverySlots,
+  };
+}
 
 export async function getDashboardData() {
   const [
@@ -223,7 +315,7 @@ export async function getDashboardData() {
     };
   });
 
-  const ordersBySlot = ["11h", "13h", "15h"].map((slot) => ({
+  const ordersBySlot = ["08h", "09h", "10h", "11h", "12h30"].map((slot) => ({
     slot,
     commandes: countedOrders.filter((order) => getOrderSlot(order) === slot).length,
   }));

@@ -5,11 +5,13 @@ import {
   MessageSquare,
   ChefHat,
   Users,
+  SlidersHorizontal,
 } from "lucide-react";
 
 export default function Sidebar({ activePage, setActivePage }) {
   const items = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "control", label: "Contrôle", icon: SlidersHorizontal },
     { id: "orders", label: "Commandes", icon: ShoppingCart },
     { id: "kitchen", label: "Cuisine", icon: ChefHat },
     { id: "stock", label: "Stock", icon: Package },

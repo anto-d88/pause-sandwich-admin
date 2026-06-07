@@ -5,6 +5,7 @@ import StockPage from "./pages/StockPage";
 import MessagesPage from "./pages/MessagesPage";
 import KitchenPage from "./pages/KitchenPage";
 import CustomersPage from "./pages/CustomersPage";
+import ControlPage from "./pages/ControlPage";
 import AdminNotifications from "./components/AdminNotifications";
 
 function App() {
@@ -16,6 +17,10 @@ function App() {
 
       {activePage === "dashboard" && (
         <Dashboard activePage={activePage} setActivePage={setActivePage} />
+      )}
+
+      {activePage === "control" && (
+        <ControlPage activePage={activePage} setActivePage={setActivePage} />
       )}
 
       {activePage === "orders" && (
